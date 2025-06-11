@@ -51,14 +51,14 @@
     .image-row {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
+      align-items: center;
       gap: 16px;
-      margin-top: 20px;
+      margin-top: 10px;
+      flex-wrap: wrap;
     }
 
-    .image-row img,
-    img {
-      max-width: 100%;
+    .image-row img {
+      width: 140px;
       height: auto;
       border-radius: 12px;
     }
@@ -110,6 +110,10 @@
         max-width: 600px;
       }
     }
+
+    #page3 button {
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -134,7 +138,7 @@
       <source src="video.mp4" type="video/mp4" />
       O teu navegador não suporta este vídeo.
     </video>
-    <button onclick="nextPage(4)">AVANÇAR PARA PRENDA</button>
+    <button id="videoBtn" onclick="nextPage(4)">AVANÇAR PARA PRENDA</button>
   </div>
 
   <!-- Página 4 -->
@@ -160,8 +164,7 @@
   <!-- Página 6 -->
   <div class="page" id="page6">
     <img src="reparado.jpg" alt="Reparado" />
-    <h2>Manutenção concluída!
-      (E ferramentas arrumadas!)</h2>
+    <h2>Manutenção concluída!<br />(E ferramentas arrumadas!)</h2>
     <button onclick="nextPage(7)">AVANÇAR</button>
   </div>
 
@@ -181,7 +184,7 @@
     </div>
     <img src="aliancas.jpg" alt="Alianças" style="max-width: 200px;" />
     <p style="margin-top: 10px; font-size: 0.9rem; color: #555; max-width: 90%;">
-      Disclaimer: as alianças serão da vossa escolha e agrado, sem o nosso bitaite!
+      Disclaimer: as alianças serão da vossa escolha e agrado, sem o nosso bitaite.
     </p>
     <div style="margin-top: 30px;">
       <button onclick="alert('Yay! 🥹❤️')">ACEITAMOS!</button>
@@ -195,6 +198,7 @@
       document.getElementById('page' + num).classList.add('active');
 
       if (num === 2) startSlideshow();
+      if (num === 3) showVideoButtonLater();
       if (num === 5) startProgressBar();
     }
 
@@ -220,7 +224,15 @@
         } else {
           img.src = slideshowImages[slideshowIndex];
         }
-      }, 3000);
+      }, 2000);
+    }
+
+    function showVideoButtonLater() {
+      const btn = document.getElementById('videoBtn');
+      btn.style.display = 'none';
+      setTimeout(() => {
+        btn.style.display = 'inline-block';
+      }, 20000);
     }
 
     function startProgressBar() {
