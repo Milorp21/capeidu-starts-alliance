@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Capeidu - Stars Alliance</title>
   <style>
     * {
@@ -52,13 +52,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
+      gap: 10px;
+      flex-wrap: nowrap;
       margin-top: 20px;
     }
 
     .image-row img {
-      width: 140px;
+      width: 120px;
       height: auto;
       object-fit: cover;
       border-radius: 12px;
@@ -91,13 +91,22 @@
       line-height: 20px;
     }
 
-    .hidden {
-      display: none;
+    video {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 12px;
+      display: block;
+    }
+
+    @media (max-height: 700px) {
+      .page#page8 {
+        justify-content: flex-start;
+        padding-top: 30px;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Página 1 -->
   <div class="page active" id="page1">
     <h1>CAPEIDU</h1>
     <h2>STARS ALLIANCE</h2>
@@ -106,28 +115,24 @@
     <button onclick="nextPage(2)">ENTRAR</button>
   </div>
 
-  <!-- Página 2 -->
   <div class="page" id="page2">
     <img id="slideshow" src="foto1.jpg" alt="Slideshow" style="max-width: 90%; border-radius: 12px;" />
   </div>
 
-  <!-- Página 3 -->
   <div class="page" id="page3">
-    <video id="videoPlayer" style="width: 90%; max-width: 400px; border-radius: 12px;" playsinline webkit-playsinline controls>
+    <video id="videoPlayer" playsinline webkit-playsinline muted controls>
       <source src="video.mp4" type="video/mp4">
       O teu navegador não suporta este vídeo.
     </video>
-    <button id="advanceBtn" class="hidden" onclick="nextPage(4)">AVANÇAR PARA PRENDA</button>
+    <button id="videoBtn" onclick="nextPage(4)" style="display:none">AVANÇAR PARA PRENDA</button>
   </div>
 
-  <!-- Página 4 -->
   <div class="page" id="page4">
     <img src="erro-404.jpg" alt="Erro 404" style="width: 100%; max-width: 300px; border-radius: 12px;" />
     <h2 style="margin-top: 20px;">ERROR 404: CHOSEN GIFT NOT FOUND</h2>
     <button onclick="nextPage(5)">AVANÇAR</button>
   </div>
 
-  <!-- Página 5 -->
   <div class="page" id="page5">
     <div class="image-row">
       <img src="rapazes.jpeg" alt="Rapazes" />
@@ -140,32 +145,33 @@
     </div>
   </div>
 
-  <!-- Página 6 -->
   <div class="page" id="page6">
     <img src="reparado.jpg" alt="Reparado" style="width: 100%; max-width: 300px; border-radius: 12px; margin-bottom: 20px;" />
-    <h2>Manutenção concluída!<br />(E ferramentas arrumadas!)</h2>
+    <h2>Manutenção concluída!</h2>
+    <h3>Ferramentas arrumadas!</h3>
     <button onclick="nextPage(7)">AVANÇAR</button>
   </div>
 
-  <!-- Página 7 -->
   <div class="page" id="page7">
     <p>Queridos parceiros da vida, como não encontrámos a prenda que vos tencionamos dar no vosso site, decidimos criar um outro para vos anunciar o que temos em mente.</p>
     <button onclick="nextPage(8)">REVEAL</button>
   </div>
 
-  <!-- Página 8 -->
   <div class="page" id="page8">
-    <div style="font-size: 1.2rem; max-width: 600px; margin-bottom: 20px;">
+    <div style="font-size: 1.1rem; max-width: 600px; margin-bottom: 20px;">
       <p>No dia em que disserem "sim", vão selar o vosso amor com um gesto simples mas cheio de significado: a troca das alianças.</p>
       <p style="margin-top: 15px;">Como homenagem à nossa aliança, Capeidu Stars Alliance, gostaríamos de vos oferecer as alianças para a Pintolim!</p>
     </div>
+
     <img src="aliancas.jpg" alt="Alianças" style="max-width: 200px; border-radius: 12px; margin: 20px 0;" />
+
     <p style="margin-top: 10px; font-size: 0.9rem; color: #555; max-width: 600px;">
       Disclaimer: as alianças serão da vossa escolha e agrado, sem o nosso bitaite!
     </p>
-    <div style="margin-top: 30px;">
+
+    <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 10px; align-items: center;">
       <button onclick="alert('Yay! 🥹❤️')">ACEITAMOS!</button>
-      <button onclick="alert('Mentira! Não podem recusar 😆')" style="margin-left: 10px; background: #eee; color: #000;">NÃO ACEITAMOS!</button>
+      <button onclick="alert('Mentira! Não podem recusar 😆')" style="background: #eee; color: #000;">NÃO ACEITAMOS!</button>
     </div>
   </div>
 
@@ -174,12 +180,14 @@
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('page' + num).classList.add('active');
 
-      if (num === 2) startSlideshow();
+      if (num === 2) {
+        startSlideshow();
+      }
 
       if (num === 3) {
-        const btn = document.getElementById('advanceBtn');
-        btn.classList.add('hidden');
-        setTimeout(() => btn.classList.remove('hidden'), 20000);
+        setTimeout(() => {
+          document.getElementById('videoBtn').style.display = 'block';
+        }, 20000);
       }
 
       if (num === 5) {
@@ -205,9 +213,8 @@
     }
 
     const slideshowImages = [
-      'foto1.jpg', 'foto2.jpg', 'foto3.jpg', 'foto4.jpg',
-      'foto5.jpg', 'foto6.jpg', 'foto7.jpg', 'foto8.jpg',
-      'foto9.jpg', 'foto10.jpg', 'foto11.jpg'
+      'foto1.jpg', 'foto2.jpg', 'foto3.jpg', 'foto4.jpg', 'foto5.jpg',
+      'foto6.jpg', 'foto7.jpg', 'foto8.jpg', 'foto9.jpg', 'foto10.jpg', 'foto11.jpg'
     ];
     let slideshowIndex = 0;
     let slideshowInterval;
@@ -228,7 +235,7 @@
         } else {
           img.src = slideshowImages[slideshowIndex];
         }
-      }, 2000); // 2 seconds
+      }, 2000);
     }
   </script>
 </body>
