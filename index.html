@@ -26,6 +26,7 @@
       text-align: center;
       padding: 20px;
       height: 100vh;
+      overflow: hidden;
     }
 
     .active {
@@ -42,6 +43,7 @@
       cursor: pointer;
       border-radius: 8px;
       transition: background 0.3s ease;
+      box-sizing: border-box;
     }
 
     button:hover {
@@ -93,11 +95,10 @@
 
     video {
       width: 100%;
-      max-width: 90vw;
-      max-height: 50vh; /* limita a altura a metade da viewport */
+      max-width: 320px;
+      max-height: 180px;
       border-radius: 12px;
       display: block;
-      margin-bottom: 20px;
       object-fit: contain;
     }
 
@@ -108,23 +109,24 @@
       }
     }
 
-    /* Ajustes para a última página */
+    /* Ajustes na última página para caber melhor no iPhone Safari */
     .page#page8 {
       height: 100vh;
       padding: 15px 10px;
       box-sizing: border-box;
-      overflow-y: auto;
       display: flex;
       flex-direction: column;
       align-items: center;
       text-align: center;
       gap: 12px;
+      overflow: hidden; /* evita scroll prematuro */
     }
 
     .page#page8 > div,
     .page#page8 p,
     .page#page8 img {
       max-width: 90vw;
+      word-wrap: break-word;
     }
 
     .page#page8 img {
@@ -134,11 +136,31 @@
       border-radius: 12px;
     }
 
+    /* Botões na última página */
     .page#page8 button {
       width: 60%;
       max-width: 250px;
       font-size: 1rem;
       padding: 10px 0;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-radius: 8px;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.3s ease;
+      box-sizing: border-box;
+      margin-top: 10px;
+    }
+
+    .page#page8 button:hover {
+      filter: brightness(0.9);
+    }
+
+    .page#page8 button:nth-child(2) {
+      background: #eee;
+      color: #000;
     }
   </style>
 </head>
