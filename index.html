@@ -48,10 +48,32 @@
       background-color: #fbbf24;
     }
 
-    .slideshow img {
-      width: 100%;
-      max-width: 600px;
+    .image-row {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .image-row img {
+      max-width: 45%;
       border-radius: 12px;
+    }
+
+    .progress-bar {
+      width: 80%;
+      background-color: #eee;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 20px;
+      height: 20px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background-color: #fcd34d;
+      transition: width 10s linear;
     }
   </style>
 </head>
@@ -67,17 +89,16 @@
 
   <!-- Página 2: Slideshow -->
   <div class="page" id="page2">
-    <div class="slideshow">
-      <img id="slideshow-image" src="foto1.jpg" alt="Slideshow" />
-    </div>
+    <img id="slideshow" src="foto1.jpg" alt="Slideshow" style="max-width: 90%; border-radius: 12px;" />
   </div>
 
   <!-- Página 3: Vídeo -->
   <div class="page" id="page3">
-    <video id="video" controls autoplay style="max-width: 90%; border-radius: 12px;">
-      <source src="video.mp4" type="video/mp4" />
-      O teu browser não suporta vídeo HTML5.
+    <video id="videoPlayer" width="90%" controls>
+      <source src="video.mp4" type="video/mp4">
+      O teu navegador não suporta este vídeo.
     </video>
+    <button onclick="nextPage(4)">AVANÇAR PARA PRENDA</button>
   </div>
 
   <!-- Página 4: Erro 404 -->
@@ -90,10 +111,13 @@
   <!-- Página 5: Manutenção -->
   <div class="page" id="page5">
     <div class="image-row">
-      <img src="rapazes.jpeg" alt="Rapazes" />
-      <img src="raparigas.jpeg" alt="Raparigas" />
+      <img src="rapazes.jpeg" alt="Rapazes" style="max-width: 45%; border-radius: 12px;" />
+      <img src="raparigas.jpeg" alt="Raparigas" style="max-width: 45%; border-radius: 12px;" />
     </div>
-    <h2 id="maintenance-text" style="margin-top: 20px;">Site em manutenção, por favor aguarde...</h2>
+    <h2 style="margin-top: 20px;">Site em manutenção, por favor aguarde...</h2>
+    <div class="progress-bar">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
     <div id="maintenance-complete" style="display:none; flex-direction: column; align-items: center;">
       <h2 style="margin-top: 20px;">Manutenção concluída! (E ferramentas arrumadas!).</h2>
       <button onclick="nextPage(6)">AVANÇAR</button>
@@ -123,43 +147,32 @@
   </div>
 
   <script>
-    const images = [
-      'foto1.jpg', 'foto2.jpg', 'foto3.jpg', 'foto4.jpg', 'foto5.jpg',
-      'foto6.jpg', 'foto7.jpg', 'foto8.jpg', 'foto9.jpg', 'foto10.jpg', 'foto11.jpg'
-    ];
-    let currentIndex = 0;
-
     function nextPage(num) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('page' + num).classList.add('active');
-    }
 
-    function startSlideshow() {
-      const imgEl = document.getElementById('slideshow-image');
-      nextPage(2);
-      let interval = setInterval(() => {
-        currentIndex++;
-        if (currentIndex >= images.length) {
-          clearInterval(interval);
-          nextPage(3);
-        } else {
-          imgEl.src = images[currentIndex];
-        }
-      }, 5000);
-    }
-
-    document.querySelector("button[onclick='nextPage(2)']").onclick = () => {
-      startSlideshow();
-    };
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const video = document.getElementById('video');
-      if (video) {
-        video.addEventListener('ended', () => {
-          nextPage(4);
-        });
+      if (num === 5) {
+        const fill = document.getElementById('progressFill');
+        fill.style.width = '100%';
+        setTimeout(() => {
+          document.getElementById('maintenance-complete').style.display = 'flex';
+        }, 10000);
       }
-    });
+    }
+
+    // Slideshow automático
+    let slideshowIndex = 1;
+    const slideshowImages = [
+      'foto1.jpg', 'foto2.jpg', 'foto3.jpg', 'foto4.jpg', 'foto5.jpg',
+      'foto6.jpg', 'foto7.jpg', 'foto8.jpg', 'foto9.jpg', 'foto10.jpg', 'foto11.jpg'
+    ];
+    setInterval(() => {
+      const img = document.getElementById('slideshow');
+      if (img) {
+        img.src = slideshowImages[slideshowIndex % slideshowImages.length];
+        slideshowIndex++;
+      }
+    }, 3000);
   </script>
 </body>
 </html>
