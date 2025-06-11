@@ -56,7 +56,7 @@
     }
 
     .image-row img {
-      max-width: 45%;
+      width: 45%;
       border-radius: 12px;
     }
 
@@ -67,6 +67,7 @@
       overflow: hidden;
       margin-top: 20px;
       height: 20px;
+      position: relative;
     }
 
     .progress-bar-fill {
@@ -74,6 +75,16 @@
       width: 0%;
       background-color: #fcd34d;
       transition: width 10s linear;
+    }
+
+    .progress-percent {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.9rem;
+      color: #333;
+      line-height: 20px;
     }
   </style>
 </head>
@@ -117,6 +128,7 @@
     <h2 style="margin-top: 20px;">Site em manutenção, por favor aguarde...</h2>
     <div class="progress-bar">
       <div class="progress-bar-fill" id="progressFill"></div>
+      <span class="progress-percent" id="progressPercent">0%</span>
     </div>
     <div id="maintenance-complete" style="display:none; flex-direction: column; align-items: center;">
       <h2 style="margin-top: 20px;">Manutenção concluída! (E ferramentas arrumadas!).</h2>
@@ -157,7 +169,21 @@
 
       if (num === 5) {
         const fill = document.getElementById('progressFill');
+        const percent = document.getElementById('progressPercent');
+        fill.style.transition = 'none';
+        fill.style.width = '0%';
+        void fill.offsetWidth;
+
+        fill.style.transition = 'width 10s linear';
         fill.style.width = '100%';
+
+        let progress = 0;
+        const interval = setInterval(() => {
+          progress++;
+          percent.textContent = progress + '%';
+          if (progress >= 100) clearInterval(interval);
+        }, 100);
+
         setTimeout(() => {
           document.getElementById('maintenance-complete').style.display = 'flex';
         }, 10000);
