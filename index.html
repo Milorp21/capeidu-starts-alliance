@@ -14,7 +14,7 @@
     body, html {
       height: 100%;
       font-family: 'Segoe UI', sans-serif;
-      background: #fdf6e3; /* branco casca de ovo */
+      background: #fdf6e3;
       color: #333;
     }
 
@@ -35,7 +35,7 @@
     button {
       margin-top: 20px;
       padding: 10px 20px;
-      background-color: #fcd34d; /* amarelo margarida */
+      background-color: #fcd34d;
       border: none;
       color: #000;
       font-size: 1rem;
@@ -48,15 +48,9 @@
       background-color: #fbbf24;
     }
 
-    .image-row {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .image-row img {
-      max-width: 45%;
+    .slideshow img {
+      width: 100%;
+      max-width: 600px;
       border-radius: 12px;
     }
   </style>
@@ -64,21 +58,37 @@
 <body>
   <!-- Página 1: Welcome -->
   <div class="page active" id="page1">
-    <h1>Capeidu - Stars Alliance</h1>
-    <p>Since 2020.</p>
-    <img src="capeidu.jpeg" alt="capeidu" style="width: 100%; max-width: 400px; border-radius: 12px;" />
+    <h1>CAPEIDU</h1>
+    <h2>STARS ALLIANCE</h2>
+    <img src="imagem1.jpg" alt="Imagem 1" style="width: 100%; max-width: 400px; border-radius: 12px; margin: 20px 0;" />
+    <p>Registered brand. Since 2020.</p>
     <button onclick="nextPage(2)">ENTRAR</button>
   </div>
 
-  <!-- Página 2: Erro 404 -->
+  <!-- Página 2: Slideshow -->
   <div class="page" id="page2">
-    <img src="erro-404.jpg" alt="Erro 404" style="max-width: 90%; border-radius: 12px;" />
-    <h2 style="margin-top: 20px;">ERROR 404: CHOSEN GIFT NOT FOUND</h2>
-    <button onclick="nextPage(3)">AVANÇAR</button>
+    <div class="slideshow">
+      <img id="slideshow-image" src="foto1.jpg" alt="Slideshow" />
+    </div>
   </div>
 
-  <!-- Página 3: Manutenção -->
+  <!-- Página 3: Vídeo -->
   <div class="page" id="page3">
+    <video id="video" controls autoplay style="max-width: 90%; border-radius: 12px;">
+      <source src="video.mp4" type="video/mp4" />
+      O teu browser não suporta vídeo HTML5.
+    </video>
+  </div>
+
+  <!-- Página 4: Erro 404 -->
+  <div class="page" id="page4">
+    <img src="erro-404.jpg" alt="Erro 404" style="max-width: 90%; border-radius: 12px;" />
+    <h2 style="margin-top: 20px;">ERROR 404: CHOSEN GIFT NOT FOUND</h2>
+    <button onclick="nextPage(5)">AVANÇAR</button>
+  </div>
+
+  <!-- Página 5: Manutenção -->
+  <div class="page" id="page5">
     <div class="image-row">
       <img src="rapazes.jpeg" alt="Rapazes" />
       <img src="raparigas.jpeg" alt="Raparigas" />
@@ -86,24 +96,18 @@
     <h2 id="maintenance-text" style="margin-top: 20px;">Site em manutenção, por favor aguarde...</h2>
     <div id="maintenance-complete" style="display:none; flex-direction: column; align-items: center;">
       <h2 style="margin-top: 20px;">Manutenção concluída! (E ferramentas arrumadas!).</h2>
-      <button onclick="nextPage(4)">AVANÇAR</button>
+      <button onclick="nextPage(6)">AVANÇAR</button>
     </div>
-    <script>
-      setTimeout(() => {
-        document.getElementById('maintenance-text').style.display = 'none';
-        document.getElementById('maintenance-complete').style.display = 'flex';
-      }, 11000);
-    </script>
   </div>
 
-  <!-- Página 4: Introdução à revelação -->
-  <div class="page" id="page4">
+  <!-- Página 6: Introdução à revelação -->
+  <div class="page" id="page6">
     <p>Queridos parceiros da vida, como não encontrámos a prenda que vos tencionamos dar no vosso site, decidimos criar um outro para vos anunciar o que temos em mente.</p>
-    <button onclick="nextPage(5)">REVEAL</button>
+    <button onclick="nextPage(7)">REVEAL</button>
   </div>
 
-  <!-- Página 5: Revelação final -->
-  <div class="page" id="page5">
+  <!-- Página 7: Revelação final -->
+  <div class="page" id="page7">
     <img src="alianças.jpg" alt="Alianças" style="max-width: 90%; border-radius: 12px; margin-bottom: 20px;" />
     <p style="font-size: 1.2rem; max-width: 600px;">
       No dia em que disserem "sim", vão selar o vosso amor com um gesto simples — mas cheio de significado: a troca das alianças.<br><br>
@@ -119,10 +123,43 @@
   </div>
 
   <script>
+    const images = [
+      'foto1.jpg', 'foto2.jpg', 'foto3.jpg', 'foto4.jpg', 'foto5.jpg',
+      'foto6.jpg', 'foto7.jpg', 'foto8.jpg', 'foto9.jpg', 'foto10.jpg', 'foto11.jpg'
+    ];
+    let currentIndex = 0;
+
     function nextPage(num) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('page' + num).classList.add('active');
     }
+
+    function startSlideshow() {
+      const imgEl = document.getElementById('slideshow-image');
+      nextPage(2);
+      let interval = setInterval(() => {
+        currentIndex++;
+        if (currentIndex >= images.length) {
+          clearInterval(interval);
+          nextPage(3);
+        } else {
+          imgEl.src = images[currentIndex];
+        }
+      }, 5000);
+    }
+
+    document.querySelector("button[onclick='nextPage(2)']").onclick = () => {
+      startSlideshow();
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const video = document.getElementById('video');
+      if (video) {
+        video.addEventListener('ended', () => {
+          nextPage(4);
+        });
+      }
+    });
   </script>
 </body>
 </html>
