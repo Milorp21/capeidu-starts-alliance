@@ -109,12 +109,45 @@
       max-width: 350px;
       border-radius: 12px;
       display: block;
-      max-height: 280px; /* aumentei de 220 para 280 */
+      max-height: 280px; /* aumentado */
       object-fit: contain;
       margin: 0 auto;
     }
 
     #page8 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      gap: 30px;
+      height: 100%;
+      background: #fff9db;
+    }
+
+    /* Animação da roda girando (simula o cão a ir buscar a prenda) */
+    .wheel {
+      border: 8px solid #fcd34d;
+      border-top: 8px solid #fbbf24;
+      border-radius: 50%;
+      width: 140px;
+      height: 140px;
+      animation: spin 10s linear forwards;
+      margin-bottom: 10px;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(3600deg); } /* 10 voltas em 10s */
+    }
+
+    #page8 p {
+      font-size: 1.2rem;
+      color: #555;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    #page9 {
       overflow-y: auto;
       align-items: flex-start;
       text-align: left;
@@ -130,13 +163,13 @@
       flex-direction: column;
     }
 
-    #page8 > div:first-child {
+    #page9 > div:first-child {
       font-size: 1.1rem;
       margin-bottom: 20px;
       line-height: 1.4;
     }
 
-    #page8 img {
+    #page9 img {
       max-width: 200px;
       border-radius: 12px;
       margin: 20px 0;
@@ -145,7 +178,7 @@
       margin-right: auto;
     }
 
-    #page8 p[style] {
+    #page9 p[style] {
       margin-top: 10px;
       font-size: 0.9rem;
       color: #555;
@@ -155,7 +188,7 @@
       margin-right: auto;
     }
 
-    #page8 .buttons-container {
+    #page9 .buttons-container {
       margin-top: 20px;
       display: flex;
       justify-content: center;
@@ -163,7 +196,7 @@
       width: 100%;
     }
 
-    #page8 button {
+    #page9 button {
       width: auto;
       min-width: 140px;
       font-size: 1.1rem;
@@ -171,13 +204,13 @@
       white-space: nowrap;
     }
 
-    #page8 button[style] {
+    #page9 button[style] {
       background: #eee;
       color: #000;
     }
 
     @media (max-height: 700px) {
-      #page8 {
+      #page9 {
         height: 95vh;
       }
     }
@@ -234,10 +267,16 @@
     <button onclick="nextPage(8)">REVEAL</button>
   </div>
 
+  <!-- Página intermédia com animação do cão -->
   <div class="page" id="page8">
+    <div class="wheel" aria-label="Animação do cão a ir buscar a prenda"></div>
+    <p>O Timmy está a ir buscar a prenda para vocês... Aguentem só mais um bocadinho!</p>
+  </div>
+
+  <!-- Última página agora page9, sem a frase inicial -->
+  <div class="page" id="page9">
     <div>
-      <p>No dia em que disserem "sim", vão selar o vosso amor com um gesto simples mas cheio de significado: a troca das alianças.</p>
-      <p style="margin-top: 15px;">Como homenagem à nossa aliança, Capeidu Stars Alliance, gostaríamos de vos oferecer as alianças para a Pintolim!</p>
+      <p>Como homenagem à nossa aliança, Capeidu Stars Alliance, gostaríamos de vos oferecer as alianças para a Pintolim!</p>
     </div>
 
     <img src="aliancas.jpg" alt="Alianças" />
@@ -287,12 +326,16 @@
           }
         }, 100);
       }
+
+      if (num === 8) {
+        // Quando entrares na página 8, espera 10s e vai para página 9
+        setTimeout(() => {
+          nextPage(9);
+        }, 10000);
+      }
     }
 
-    const slideshowImages = [
-      'foto1.jpg', 'foto2.jpg', 'foto3.jpg', 'foto4.jpg', 'foto5.jpg',
-      'foto6.jpg', 'foto7.jpg', 'foto8.jpg', 'foto9.jpg', 'foto10.jpg', 'foto11.jpg'
-    ];
+    const slideshowImages = ['foto1.jpg', 'foto2.jpg', 'foto3.jpg', 'foto4.jpg'];
     let slideshowIndex = 0;
     let slideshowInterval;
 
@@ -300,19 +343,12 @@
       const img = document.getElementById('slideshow');
       if (!img) return;
 
-      slideshowIndex = 0;
-      img.src = slideshowImages[slideshowIndex];
-
       clearInterval(slideshowInterval);
+
       slideshowInterval = setInterval(() => {
-        slideshowIndex++;
-        if (slideshowIndex >= slideshowImages.length) {
-          clearInterval(slideshowInterval);
-          nextPage(3);
-        } else {
-          img.src = slideshowImages[slideshowIndex];
-        }
-      }, 2000);
+        slideshowIndex = (slideshowIndex + 1) % slideshowImages.length;
+        img.src = slideshowImages[slideshowIndex];
+      }, 4000);
     }
   </script>
 </body>
