@@ -5,15 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Capeidu - Stars Alliance</title>
 <style>
-  /* Reset básico e layout geral */
+  /* Estilos originais mantidos */
+
   * {
     box-sizing: border-box;
   }
   body, html {
     margin: 0; padding: 0; height: 100%; width: 100%;
     font-family: Arial, sans-serif;
-    background: #121212;
-    color: #eee;
+    background: #fff;
+    color: #000;
     overflow-x: hidden;
   }
   .page {
@@ -23,7 +24,7 @@
     padding: 20px;
     box-sizing: border-box;
     overflow-y: auto;
-    background: #121212;
+    background: #fff;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -40,11 +41,11 @@
     font-weight: normal;
     margin-top: 0;
     font-size: 1.5em;
-    color: #aaa;
+    color: #333;
     text-align: center;
   }
   button {
-    background: #ffcc00;
+    background: #007bff;
     border: none;
     padding: 12px 24px;
     border-radius: 24px;
@@ -53,9 +54,10 @@
     cursor: pointer;
     margin-top: 20px;
     transition: background 0.3s;
+    color: white;
   }
   button:hover {
-    background: #ffaa00;
+    background: #0056b3;
   }
   #page1 img {
     max-width: 300px;
@@ -177,9 +179,7 @@
   let slideshowInterval;
 
   function nextPage(num) {
-    // Esconde todas as páginas
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    // Mostra a página pedida
     const page = document.getElementById('page' + num);
     if (page) {
       page.classList.add('active');
@@ -190,16 +190,13 @@
     }
 
     if (num === 3) {
-      // Esconde botão do vídeo no início
       document.getElementById('videoBtn').style.display = 'none';
-      // Mostra botão depois de 20 segundos
       setTimeout(() => {
         document.getElementById('videoBtn').style.display = 'block';
       }, 20000);
     }
 
     if (num === 4) {
-      // Página intermédia, esperar 10s e avançar para última página
       setTimeout(() => {
         nextPage(5);
       }, 10000);
@@ -216,7 +213,7 @@
       slideshowIndex++;
       if (slideshowIndex >= slideshowImages.length) {
         clearInterval(slideshowInterval);
-        nextPage(3); // Avança para página do vídeo depois do slideshow terminar
+        nextPage(3);
       } else {
         img.src = slideshowImages[slideshowIndex];
       }
