@@ -2,259 +2,156 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Capeidu - Stars Alliance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Capeidu Stars Alliance</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     body, html {
-      height: 100%;
-      font-family: 'Segoe UI', sans-serif;
-      background: #fdf6e3;
-      color: #333;
-      overflow: hidden; /* evita scroll do body */
+      margin: 0; padding: 0; height: 100%; font-family: Arial, sans-serif;
+      display: flex; justify-content: center; align-items: center; background: #fff;
     }
-
     .page {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      display: flex;
+      display: none;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      height: 100vh;
+      width: 100vw;
       padding: 20px;
-      background: #fdf6e3;
+      box-sizing: border-box;
       text-align: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease;
-      overflow: hidden;
-      z-index: 0;
     }
-
     .page.active {
-      opacity: 1;
-      pointer-events: auto;
-      z-index: 10;
+      display: flex;
     }
-
     button {
       margin-top: 20px;
-      padding: 10px 25px;
-      background-color: #fcd34d;
-      border: none;
-      color: #000;
+      padding: 12px 25px;
       font-size: 1rem;
       cursor: pointer;
-      border-radius: 8px;
-      transition: background 0.3s ease;
-      white-space: nowrap;
-      min-width: 140px;
-      box-sizing: border-box;
+      border: none;
+      border-radius: 6px;
+      background-color: #0078D7;
+      color: white;
+      transition: background-color 0.3s ease;
     }
-
     button:hover {
-      background-color: #fbbf24;
+      background-color: #005ea3;
     }
-
-    .image-row {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      flex-wrap: nowrap;
-      margin-top: 20px;
-    }
-
-    .image-row img {
-      width: 120px;
-      height: auto;
-      object-fit: cover;
-      border-radius: 12px;
-    }
-
-    .progress-bar {
-      width: 80%;
-      background-color: #eee;
-      border-radius: 8px;
-      overflow: hidden;
-      margin-top: 20px;
+    #progressFill {
       height: 20px;
-      position: relative;
-    }
-
-    .progress-bar-fill {
-      height: 100%;
+      background-color: #0078D7;
       width: 0%;
-      background-color: #fcd34d;
+      border-radius: 10px;
       transition: width 10s linear;
     }
-
-    .progress-percent {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.9rem;
-      color: #333;
-      line-height: 20px;
-    }
-
-    video {
-      width: 90%;
-      max-width: 350px;
-      border-radius: 12px;
-      display: block;
-      max-height: 280px; /* aumentei de 220 para 280 */
-      object-fit: contain;
-      margin: 0 auto;
-    }
-
-    #page8 {
-      overflow-y: auto;
-      align-items: flex-start;
-      text-align: left;
-      max-width: 600px;
-      margin: 0 auto;
-      border-radius: 12px;
-      background: #fff9db;
-      box-shadow: 0 0 12px rgba(0,0,0,0.1);
-      padding: 20px 15px 30px 15px;
-      height: 90vh;
-      gap: 15px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    #page8 > div:first-child {
-      font-size: 1.1rem;
-      margin-bottom: 20px;
-      line-height: 1.4;
-    }
-
-    #page8 img {
-      max-width: 200px;
-      border-radius: 12px;
-      margin: 20px 0;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    #page8 p[style] {
-      margin-top: 10px;
-      font-size: 0.9rem;
-      color: #555;
-      max-width: 600px;
-      text-align: center;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    #page8 .buttons-container {
+    #progressBar {
+      width: 80%;
+      background: #ddd;
+      border-radius: 10px;
+      overflow: hidden;
       margin-top: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 20px; /* espaço entre os botões */
-      width: 100%;
+    }
+    #progressPercent {
+      margin-top: 5px;
+      font-weight: bold;
     }
 
-    #page8 button {
-      width: auto;
-      min-width: 140px;
-      font-size: 1.1rem;
-      padding: 12px 25px;
-      white-space: nowrap;
-    }
-
-    #page8 button[style] {
-      background: #eee;
-      color: #000;
-    }
-
-    @media (max-height: 700px) {
-      #page8 {
-        height: 95vh;
+    /* Animação para a imagem do Timmy */
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(3600deg); /* 10 voltas em 10 segundos */
       }
     }
   </style>
 </head>
 <body>
-  <div class="page active" id="page1">
-    <h1>CAPEIDU</h1>
-    <h2>STARS ALLIANCE</h2>
-    <img src="imagem1.jpg" alt="Imagem 1" style="width: 100%; max-width: 300px; border-radius: 12px; margin: 20px 0;" />
-    <p>Registered brand. Since 2020.</p>
-    <button onclick="nextPage(2)">ENTRAR</button>
+
+  <!-- Página 1 -->
+  <div class="page active" id="page1" style="background:#fce4ec;">
+    <h1>Bem-vindos ao Capeidu Stars Alliance</h1>
+    <p>Preparem-se para uma surpresa especial...</p>
+    <button onclick="nextPage(2)">Começar</button>
   </div>
 
-  <div class="page" id="page2">
-    <img id="slideshow" src="foto1.jpg" alt="Slideshow" style="max-width: 90%; border-radius: 12px;" />
+  <!-- Página 2 -->
+  <div class="page" id="page2" style="background:#e8f5e9;">
+    <h2>História da Aliança</h2>
+    <p>Era uma vez um amor que durou 15 anos...</p>
+    <button onclick="nextPage(3)">Seguinte</button>
   </div>
 
-  <div class="page" id="page3">
-    <video id="videoPlayer" playsinline webkit-playsinline muted controls>
-      <source src="video.mp4" type="video/mp4">
-      O teu navegador não suporta este vídeo.
-    </video>
-    <button id="videoBtn" onclick="nextPage(4)" style="display:none">AVANÇAR PARA PRENDA</button>
+  <!-- Página 3 -->
+  <div class="page" id="page3" style="background:#e3f2fd;">
+    <h2>Momento Especial</h2>
+    <p>Um vídeo para recordar todos os momentos inesquecíveis.</p>
+    <button id="videoBtn" style="display:none;" onclick="nextPage(4)">Ver Vídeo</button>
   </div>
 
-  <div class="page" id="page4">
-    <img src="erro-404.jpg" alt="Erro 404" style="width: 100%; max-width: 300px; border-radius: 12px;" />
-    <h2 style="margin-top: 20px;">ERROR 404: CHOSEN GIFT NOT FOUND</h2>
-    <button onclick="nextPage(5)">AVANÇAR</button>
+  <!-- Página 4 -->
+  <div class="page" id="page4" style="background:#fff3e0;">
+    <h2>Memórias e Carinho</h2>
+    <p>Queremos celebrar com algo muito especial para vocês.</p>
+    <button onclick="nextPage(5)">Continuar</button>
   </div>
 
-  <div class="page" id="page5">
-    <div class="image-row">
-      <img src="rapazes.jpeg" alt="Rapazes" />
-      <img src="raparigas.jpg" alt="Raparigas" />
+  <!-- Página 5 -->
+  <div class="page" id="page5" style="background:#ede7f6;">
+    <h2>Carregando Surpresa</h2>
+    <div id="progressBar">
+      <div id="progressFill"></div>
     </div>
-    <h2 style="margin-top: 20px;">Site em manutenção, por favor aguarde...</h2>
-    <div class="progress-bar">
-      <div class="progress-bar-fill" id="progressFill"></div>
-      <span class="progress-percent" id="progressPercent">0%</span>
-    </div>
+    <div id="progressPercent">0%</div>
   </div>
 
-  <div class="page" id="page6">
-    <img src="reparado.jpg" alt="Reparado" style="width: 100%; max-width: 300px; border-radius: 12px; margin-bottom: 20px;" />
-    <h2>Manutenção concluída!</h2>
-    <h3>Ferramentas arrumadas!</h3>
-    <button onclick="nextPage(7)">AVANÇAR</button>
+  <!-- Página 6 -->
+  <div class="page" id="page6" style="background:#f3e5f5;">
+    <h2>Está Quase a Chegar!</h2>
+    <p>Preparados para a surpresa do Timmy?</p>
+    <button onclick="nextPage(7)">Revelar</button>
   </div>
 
-  <div class="page" id="page7">
-    <p>Queridos parceiros da vida, como não encontrámos a prenda que vos tencionamos dar no vosso site, decidimos criar um outro para vos anunciar o que temos em mente.</p>
-    <button onclick="nextPage(8)">REVEAL</button>
+  <!-- Página 7 -->
+  <div class="page" id="page7" style="background:#e1bee7;">
+    <h2>A Surpresa do Timmy</h2>
+    <button onclick="nextPage(7.5)">REVEAL</button>
   </div>
 
-  <div class="page" id="page8">
+  <!-- Nova Página 7.5 - animação do Timmy -->
+  <div class="page" id="page7_5" style="background:#fdf6e3; flex-direction: column; justify-content: center; align-items: center;">
+    <img src="timmy.jpg" alt="Timmy a ir buscar a prenda" style="width: 250px; border-radius: 12px; animation: spin 10s linear forwards;" />
+    <p style="margin-top: 20px; font-size: 1.2rem; color: #333;">O Timmy está a ir buscar a prenda...</p>
+  </div>
+
+  <!-- Página 8 -->
+  <div class="page" id="page8" style="background:#fffde7;">
+    <h2>Uma Homenagem à Nossa Aliança</h2>
     <div>
-      <p>No dia em que disserem "sim", vão selar o vosso amor com um gesto simples mas cheio de significado: a troca das alianças.</p>
       <p style="margin-top: 15px;">Como homenagem à nossa aliança, Capeidu Stars Alliance, gostaríamos de vos oferecer as alianças para a Pintolim!</p>
     </div>
+    <button onclick="nextPage(9)">Continuar</button>
+  </div>
 
-    <img src="aliancas.jpg" alt="Alianças" />
-
-    <p style="margin-top: 10px; font-size: 0.9rem; color: #555; max-width: 600px; text-align: center;">
-      Disclaimer: as alianças serão da vossa escolha e agrado, sem o nosso bitaite!
-    </p>
-
-    <div class="buttons-container">
-      <button onclick="alert('Yay! 🥹❤️')">ACEITAMOS!</button>
-      <button onclick="alert('Mentira! Não podem recusar 😆')" style="background: #eee; color: #000;">NÃO ACEITAMOS!</button>
-    </div>
+  <!-- Página 9 -->
+  <div class="page" id="page9" style="background:#d7ccc8;">
+    <h2>Obrigado por fazerem parte desta história!</h2>
+    <p>Esperamos que gostem desta pequena surpresa do Timmy e da nossa aliança.</p>
   </div>
 
   <script>
     function nextPage(num) {
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+
+      if (num === 7.5) {
+        document.getElementById('page7_5').classList.add('active');
+        setTimeout(() => {
+          nextPage(8);
+        }, 10000); // 10 segundos
+        return;
+      }
+
       document.getElementById('page' + num).classList.add('active');
 
       if (num === 2) {
@@ -272,7 +169,7 @@
         const percent = document.getElementById('progressPercent');
         fill.style.transition = 'none';
         fill.style.width = '0%';
-        void fill.offsetWidth;
+        void fill.offsetWidth; // trigger reflow
 
         fill.style.transition = 'width 10s linear';
         fill.style.width = '100%';
@@ -289,31 +186,10 @@
       }
     }
 
-    const slideshowImages = [
-      'foto1.jpg', 'foto2.jpg', 'foto3.jpg', 'foto4.jpg', 'foto5.jpg',
-      'foto6.jpg', 'foto7.jpg', 'foto8.jpg', 'foto9.jpg', 'foto10.jpg', 'foto11.jpg'
-    ];
-    let slideshowIndex = 0;
-    let slideshowInterval;
-
     function startSlideshow() {
-      const img = document.getElementById('slideshow');
-      if (!img) return;
-
-      slideshowIndex = 0;
-      img.src = slideshowImages[slideshowIndex];
-
-      clearInterval(slideshowInterval);
-      slideshowInterval = setInterval(() => {
-        slideshowIndex++;
-        if (slideshowIndex >= slideshowImages.length) {
-          clearInterval(slideshowInterval);
-          nextPage(3);
-        } else {
-          img.src = slideshowImages[slideshowIndex];
-        }
-      }, 2000);
+      // implementação do slideshow se existir
     }
   </script>
+
 </body>
 </html>
