@@ -16,35 +16,27 @@
       font-family: 'Segoe UI', sans-serif;
       background: #fdf6e3;
       color: #333;
-      overflow: hidden; /* evita scroll do body */
+      overflow-x: hidden;
     }
 
     .page {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      display: flex;
-      flex-direction: column;
+      display: none;
       justify-content: center;
       align-items: center;
-      padding: 20px;
-      background: #fdf6e3;
+      flex-direction: column;
       text-align: center;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.4s ease;
-      overflow: hidden;
-      z-index: 0;
+      padding: 20px;
+      height: 100vh;
+      overflow-y: auto;
     }
 
-    .page.active {
-      opacity: 1;
-      pointer-events: auto;
-      z-index: 10;
+    .active {
+      display: flex;
     }
 
     button {
       margin-top: 20px;
-      padding: 10px 25px;
+      padding: 10px 20px;
       background-color: #fcd34d;
       border: none;
       color: #000;
@@ -52,9 +44,7 @@
       cursor: pointer;
       border-radius: 8px;
       transition: background 0.3s ease;
-      white-space: nowrap;
-      min-width: 140px;
-      box-sizing: border-box;
+      min-width: 120px;
     }
 
     button:hover {
@@ -106,114 +96,79 @@
 
     video {
       width: 90%;
-      max-width: 350px;
+      max-width: 400px;
+      height: 220px;
       border-radius: 12px;
       display: block;
-      max-height: 280px; /* aumentado */
-      object-fit: contain;
       margin: 0 auto;
     }
 
-    #page8 {
+    #page9 button {
+      margin-top: 0;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    #page9 .button-row {
       display: flex;
       justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      gap: 30px;
-      height: 100%;
-      background: #fff9db;
-    }
-
-    /* Animação da roda girando (simula o cão a ir buscar a prenda) */
-    .wheel {
-      border: 8px solid #fcd34d;
-      border-top: 8px solid #fbbf24;
-      border-radius: 50%;
-      width: 140px;
-      height: 140px;
-      animation: spin 10s linear forwards;
-      margin-bottom: 10px;
-    }
-
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(3600deg); } /* 10 voltas em 10s */
-    }
-
-    #page8 p {
-      font-size: 1.2rem;
-      color: #555;
-      max-width: 320px;
-      margin: 0 auto;
-    }
-
-    #page9 {
-      overflow-y: auto;
-      align-items: flex-start;
-      text-align: left;
+      width: 100%;
       max-width: 600px;
-      margin: 0 auto;
-      border-radius: 12px;
-      background: #fff9db;
-      box-shadow: 0 0 12px rgba(0,0,0,0.1);
-      padding: 20px 15px 30px 15px;
-      height: 90vh;
-      gap: 15px;
-      display: flex;
-      flex-direction: column;
+      margin-top: 20px;
+      gap: 10px;
+      flex-wrap: nowrap;
     }
 
-    #page9 > div:first-child {
-      font-size: 1.1rem;
-      margin-bottom: 20px;
-      line-height: 1.4;
-    }
-
-    #page9 img {
-      max-width: 200px;
-      border-radius: 12px;
-      margin: 20px 0;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    #page9 p[style] {
+    #page9 p.disclaimer {
       margin-top: 10px;
       font-size: 0.9rem;
       color: #555;
       max-width: 600px;
-      text-align: center;
       margin-left: auto;
       margin-right: auto;
     }
 
-    #page9 .buttons-container {
-      margin-top: 20px;
-      display: flex;
+    /* Página de animação do cão */
+    #page8 {
+      flex-direction: column;
       justify-content: center;
-      gap: 20px; /* espaço entre os botões */
-      width: 100%;
+      overflow: hidden;
+      height: 100vh;
     }
 
-    #page9 button {
-      width: auto;
-      min-width: 140px;
-      font-size: 1.1rem;
-      padding: 12px 25px;
-      white-space: nowrap;
+    #page8 .animation-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      font-size: 1.2rem;
+      max-width: 90%;
+      margin: 0 auto;
     }
 
-    #page9 button[style] {
-      background: #eee;
-      color: #000;
+    /* Animação simples da roda a girar */
+    .wheel {
+      width: 120px;
+      height: 120px;
+      border: 12px solid #fcd34d;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 10s linear forwards;
+      margin: 0 auto;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg);}
+      to { transform: rotate(3600deg);} /* 10 voltas em 10s */
     }
 
     @media (max-height: 700px) {
-      #page9 {
-        height: 95vh;
+      .page#page8 {
+        justify-content: flex-start;
+        padding-top: 30px;
       }
     }
+
   </style>
 </head>
 <body>
@@ -231,7 +186,7 @@
 
   <div class="page" id="page3">
     <video id="videoPlayer" playsinline webkit-playsinline muted controls>
-      <source src="video.mp4" type="video/mp4">
+      <source src="video.mp4" type="video/mp4" />
       O teu navegador não suporta este vídeo.
     </video>
     <button id="videoBtn" onclick="nextPage(4)" style="display:none">AVANÇAR PARA PRENDA</button>
@@ -267,25 +222,24 @@
     <button onclick="nextPage(8)">REVEAL</button>
   </div>
 
-  <!-- Página intermédia com animação do cão -->
   <div class="page" id="page8">
-    <div class="wheel" aria-label="Animação do cão a ir buscar a prenda"></div>
-    <p>O Timmy está a ir buscar a prenda para vocês... Aguentem só mais um bocadinho!</p>
+    <div class="animation-container">
+      <div class="wheel" aria-label="Animação da roda a girar"></div>
+      <p>O Timmy está a ir buscar a prenda...</p>
+    </div>
   </div>
 
-  <!-- Última página agora page9, sem a frase inicial -->
   <div class="page" id="page9">
-    <div>
+    <img src="aliancas.jpg" alt="Alianças" style="max-width: 200px; border-radius: 12px; margin: 20px 0;" />
+    <div style="font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
       <p>Como homenagem à nossa aliança, Capeidu Stars Alliance, gostaríamos de vos oferecer as alianças para a Pintolim!</p>
     </div>
 
-    <img src="aliancas.jpg" alt="Alianças" />
-
-    <p style="margin-top: 10px; font-size: 0.9rem; color: #555; max-width: 600px; text-align: center;">
+    <p class="disclaimer">
       Disclaimer: as alianças serão da vossa escolha e agrado, sem o nosso bitaite!
     </p>
 
-    <div class="buttons-container">
+    <div class="button-row">
       <button onclick="alert('Yay! 🥹❤️')">ACEITAMOS!</button>
       <button onclick="alert('Mentira! Não podem recusar 😆')" style="background: #eee; color: #000;">NÃO ACEITAMOS!</button>
     </div>
@@ -328,14 +282,18 @@
       }
 
       if (num === 8) {
-        // Quando entrares na página 8, espera 10s e vai para página 9
+        // Página 8: animação do cão por 10s e depois vai para página 9
         setTimeout(() => {
           nextPage(9);
         }, 10000);
       }
     }
 
-    const slideshowImages = ['foto1.jpg', 'foto2.jpg', 'foto3.jpg', 'foto4.jpg'];
+    const slideshowImages = [
+      'foto1.jpg', 'foto2.jpg', 'foto3.jpg', 'foto4.jpg',
+      'foto5.jpg', 'foto6.jpg', 'foto7.jpg', 'foto8.jpg',
+      'foto9.jpg', 'foto10.jpg', 'foto11.jpg'
+    ];
     let slideshowIndex = 0;
     let slideshowInterval;
 
@@ -345,11 +303,22 @@
 
       clearInterval(slideshowInterval);
 
+      slideshowIndex = 0;
+      img.src = slideshowImages[slideshowIndex];
+
       slideshowInterval = setInterval(() => {
-        slideshowIndex = (slideshowIndex + 1) % slideshowImages.length;
+        slideshowIndex++;
+        if (slideshowIndex >= slideshowImages.length) {
+          clearInterval(slideshowInterval);
+          return; // Para o slideshow, sem repetir
+        }
         img.src = slideshowImages[slideshowIndex];
       }, 4000);
     }
+
+    // Para garantir que o vídeo está pausado ao entrar
+    document.getElementById('videoPlayer').pause();
+
   </script>
 </body>
 </html>
