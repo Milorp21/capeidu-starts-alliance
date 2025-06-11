@@ -44,7 +44,7 @@
       cursor: pointer;
       border-radius: 8px;
       transition: background 0.3s ease;
-      min-width: 120px;
+      white-space: nowrap;
     }
 
     button:hover {
@@ -97,78 +97,86 @@
     video {
       width: 90%;
       max-width: 400px;
-      height: 220px;
+      height: 240px;
       border-radius: 12px;
       display: block;
-      margin: 0 auto;
+      margin: 0 auto 10px;
     }
 
-    #page9 button {
-      margin-top: 0;
-      margin-left: 10px;
-      margin-right: 10px;
+    @media (max-height: 700px) {
+      .page#page8, .page#page9 {
+        justify-content: flex-start;
+        padding-top: 20px;
+      }
+    }
+
+    /* Última página ajustes */
+    #page9 {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding: 15px;
+    }
+
+    #page9 > div.content {
+      max-width: 600px;
+      width: 100%;
+      margin-bottom: 20px;
+      color: #555;
+      font-size: 0.9rem;
+    }
+
+    #page9 img {
+      max-width: 200px;
+      border-radius: 12px;
+      margin-bottom: 15px;
     }
 
     #page9 .button-row {
       display: flex;
       justify-content: center;
+      gap: 15px;
       width: 100%;
-      max-width: 600px;
-      margin-top: 20px;
-      gap: 10px;
-      flex-wrap: nowrap;
+      max-width: 400px;
     }
 
-    #page9 p.disclaimer {
-      margin-top: 10px;
-      font-size: 0.9rem;
-      color: #555;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+    #page9 button {
+      flex: 1;
+      padding: 12px 0;
+      font-size: 1rem;
+      margin-top: 0;
+      white-space: nowrap;
     }
 
-    /* Página de animação do cão */
+    /* Página intermediária animação */
     #page8 {
       flex-direction: column;
       justify-content: center;
-      overflow: hidden;
-      height: 100vh;
-    }
-
-    #page8 .animation-container {
-      display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 20px;
-      font-size: 1.2rem;
-      max-width: 90%;
-      margin: 0 auto;
+      height: 100vh;
+      padding: 20px;
+      overflow: hidden;
     }
 
-    /* Animação simples da roda a girar */
-    .wheel {
-      width: 120px;
-      height: 120px;
-      border: 12px solid #fcd34d;
-      border-top-color: transparent;
-      border-radius: 50%;
+    #page8 .dog-container {
+      width: 150px;
+      height: 150px;
+      margin-bottom: 20px;
       animation: spin 10s linear forwards;
-      margin: 0 auto;
+    }
+
+    #page8 .dog-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 20px;
     }
 
     @keyframes spin {
-      from { transform: rotate(0deg);}
-      to { transform: rotate(3600deg);} /* 10 voltas em 10s */
+      from { transform: rotate(0deg); }
+      to { transform: rotate(3600deg); } /* 10 rotações em 10s */
     }
-
-    @media (max-height: 700px) {
-      .page#page8 {
-        justify-content: flex-start;
-        padding-top: 30px;
-      }
-    }
-
   </style>
 </head>
 <body>
@@ -186,7 +194,7 @@
 
   <div class="page" id="page3">
     <video id="videoPlayer" playsinline webkit-playsinline muted controls>
-      <source src="video.mp4" type="video/mp4" />
+      <source src="video.mp4" type="video/mp4">
       O teu navegador não suporta este vídeo.
     </video>
     <button id="videoBtn" onclick="nextPage(4)" style="display:none">AVANÇAR PARA PRENDA</button>
@@ -222,23 +230,22 @@
     <button onclick="nextPage(8)">REVEAL</button>
   </div>
 
+  <!-- Página intermédia da animação do cão -->
   <div class="page" id="page8">
-    <div class="animation-container">
-      <div class="wheel" aria-label="Animação da roda a girar"></div>
-      <p>O Timmy está a ir buscar a prenda...</p>
+    <div class="dog-container">
+      <img src="dog.gif" alt="Cão a buscar prenda" />
     </div>
+    <p>O Timmy está a ir buscar a prenda...</p>
   </div>
 
   <div class="page" id="page9">
-    <img src="aliancas.jpg" alt="Alianças" style="max-width: 200px; border-radius: 12px; margin: 20px 0;" />
-    <div style="font-size: 1.1rem; max-width: 600px; margin: 0 auto;">
+    <div class="content">
+      <img src="aliancas.jpg" alt="Alianças" />
       <p>Como homenagem à nossa aliança, Capeidu Stars Alliance, gostaríamos de vos oferecer as alianças para a Pintolim!</p>
+      <p style="font-size: 0.8rem; color: #777; margin-top: 10px;">
+        Disclaimer: as alianças serão da vossa escolha e agrado, sem o nosso bitaite!
+      </p>
     </div>
-
-    <p class="disclaimer">
-      Disclaimer: as alianças serão da vossa escolha e agrado, sem o nosso bitaite!
-    </p>
-
     <div class="button-row">
       <button onclick="alert('Yay! 🥹❤️')">ACEITAMOS!</button>
       <button onclick="alert('Mentira! Não podem recusar 😆')" style="background: #eee; color: #000;">NÃO ACEITAMOS!</button>
@@ -282,7 +289,7 @@
       }
 
       if (num === 8) {
-        // Página 8: animação do cão por 10s e depois vai para página 9
+        // Passar automaticamente para a página 9 após 10 segundos da animação
         setTimeout(() => {
           nextPage(9);
         }, 10000);
@@ -290,35 +297,39 @@
     }
 
     const slideshowImages = [
-      'foto1.jpg', 'foto2.jpg', 'foto3.jpg', 'foto4.jpg',
-      'foto5.jpg', 'foto6.jpg', 'foto7.jpg', 'foto8.jpg',
-      'foto9.jpg', 'foto10.jpg', 'foto11.jpg'
+      'foto1.jpg',
+      'foto2.jpg',
+      'foto3.jpg',
+      'foto4.jpg',
+      'foto5.jpg',
+      'foto6.jpg',
+      'foto7.jpg',
+      'foto8.jpg',
+      'foto9.jpg',
+      'foto10.jpg',
+      'foto11.jpg'
     ];
+
     let slideshowIndex = 0;
     let slideshowInterval;
 
     function startSlideshow() {
-      const img = document.getElementById('slideshow');
-      if (!img) return;
-
       clearInterval(slideshowInterval);
-
       slideshowIndex = 0;
+      const img = document.getElementById('slideshow');
       img.src = slideshowImages[slideshowIndex];
 
       slideshowInterval = setInterval(() => {
         slideshowIndex++;
         if (slideshowIndex >= slideshowImages.length) {
           clearInterval(slideshowInterval);
-          return; // Para o slideshow, sem repetir
+          // Mantém na última imagem
+          slideshowIndex = slideshowImages.length - 1;
+        } else {
+          img.src = slideshowImages[slideshowIndex];
         }
-        img.src = slideshowImages[slideshowIndex];
-      }, 4000);
+      }, 2000);
     }
-
-    // Para garantir que o vídeo está pausado ao entrar
-    document.getElementById('videoPlayer').pause();
-
   </script>
 </body>
 </html>
