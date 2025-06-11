@@ -111,8 +111,8 @@
   <!-- Página 5: Manutenção -->
   <div class="page" id="page5">
     <div class="image-row">
-      <img src="rapazes.jpeg" alt="Rapazes" style="max-width: 45%; border-radius: 12px;" />
-      <img src="raparigas.jpeg" alt="Raparigas" style="max-width: 45%; border-radius: 12px;" />
+      <img src="rapazes.jpeg" alt="Rapazes" />
+      <img src="raparigas.jpeg" alt="Raparigas" />
     </div>
     <h2 style="margin-top: 20px;">Site em manutenção, por favor aguarde...</h2>
     <div class="progress-bar">
@@ -151,6 +151,10 @@
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById('page' + num).classList.add('active');
 
+      if (num === 2) {
+        startSlideshow();
+      }
+
       if (num === 5) {
         const fill = document.getElementById('progressFill');
         fill.style.width = '100%';
@@ -160,19 +164,31 @@
       }
     }
 
-    // Slideshow automático
-    let slideshowIndex = 1;
     const slideshowImages = [
       'foto1.jpg', 'foto2.jpg', 'foto3.jpg', 'foto4.jpg', 'foto5.jpg',
       'foto6.jpg', 'foto7.jpg', 'foto8.jpg', 'foto9.jpg', 'foto10.jpg', 'foto11.jpg'
     ];
-    setInterval(() => {
+    let slideshowIndex = 0;
+    let slideshowInterval;
+
+    function startSlideshow() {
       const img = document.getElementById('slideshow');
-      if (img) {
-        img.src = slideshowImages[slideshowIndex % slideshowImages.length];
+      if (!img) return;
+
+      slideshowIndex = 0;
+      img.src = slideshowImages[slideshowIndex];
+
+      clearInterval(slideshowInterval);
+      slideshowInterval = setInterval(() => {
         slideshowIndex++;
-      }
-    }, 3000);
+        if (slideshowIndex >= slideshowImages.length) {
+          clearInterval(slideshowInterval);
+          nextPage(3);
+        } else {
+          img.src = slideshowImages[slideshowIndex];
+        }
+      }, 3000);
+    }
   </script>
 </body>
 </html>
