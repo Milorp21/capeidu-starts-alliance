@@ -130,20 +130,23 @@
       <div class="progress-bar-fill" id="progressFill"></div>
       <span class="progress-percent" id="progressPercent">0%</span>
     </div>
-    <div id="maintenance-complete" style="display:none; flex-direction: column; align-items: center;">
-      <h2 style="margin-top: 20px;">Manutenção concluída! (E ferramentas arrumadas!).</h2>
-      <button onclick="nextPage(6)">AVANÇAR</button>
-    </div>
   </div>
 
-  <!-- Página 6: Introdução à revelação -->
+  <!-- Página 6: Manutenção concluída -->
   <div class="page" id="page6">
-    <p>Queridos parceiros da vida, como não encontrámos a prenda que vos tencionamos dar no vosso site, decidimos criar um outro para vos anunciar o que temos em mente.</p>
-    <button onclick="nextPage(7)">REVEAL</button>
+    <img src="reparado.jpg" alt="Reparado" style="max-width: 90%; border-radius: 12px; margin-bottom: 20px;" />
+    <h2>Manutenção concluída! (E ferramentas arrumadas!).</h2>
+    <button onclick="nextPage(7)">AVANÇAR</button>
   </div>
 
-  <!-- Página 7: Revelação final -->
+  <!-- Página 7: Introdução à revelação -->
   <div class="page" id="page7">
+    <p>Queridos parceiros da vida, como não encontrámos a prenda que vos tencionamos dar no vosso site, decidimos criar um outro para vos anunciar o que temos em mente.</p>
+    <button onclick="nextPage(8)">REVEAL</button>
+  </div>
+
+  <!-- Página 8: Revelação final -->
+  <div class="page" id="page8">
     <img src="alianças.jpg" alt="Alianças" style="max-width: 90%; border-radius: 12px; margin-bottom: 20px;" />
     <p style="font-size: 1.2rem; max-width: 600px;">
       No dia em que disserem "sim", vão selar o vosso amor com um gesto simples — mas cheio de significado: a troca das alianças.<br><br>
@@ -181,12 +184,11 @@
         const interval = setInterval(() => {
           progress++;
           percent.textContent = progress + '%';
-          if (progress >= 100) clearInterval(interval);
+          if (progress >= 100) {
+            clearInterval(interval);
+            nextPage(6);
+          }
         }, 100);
-
-        setTimeout(() => {
-          document.getElementById('maintenance-complete').style.display = 'flex';
-        }, 10000);
       }
     }
 
