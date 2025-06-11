@@ -2,7 +2,7 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Capeidu - Stars Alliance</title>
   <style>
     * {
@@ -13,9 +13,10 @@
 
     body, html {
       height: 100%;
-      font-family: 'Segoe UI', sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       background: #fdf6e3;
       color: #333;
+      -webkit-text-size-adjust: 100%;
     }
 
     .page {
@@ -24,8 +25,8 @@
       align-items: center;
       flex-direction: column;
       text-align: center;
-      padding: 20px;
-      height: 100vh;
+      padding: 5vh 5vw;
+      min-height: 100vh;
     }
 
     .active {
@@ -34,13 +35,14 @@
 
     button {
       margin-top: 20px;
-      padding: 10px 20px;
+      padding: 12px 24px;
       background-color: #fcd34d;
       border: none;
       color: #000;
       font-size: 1rem;
+      font-weight: 600;
       cursor: pointer;
-      border-radius: 8px;
+      border-radius: 12px;
       transition: background 0.3s ease;
     }
 
@@ -52,22 +54,24 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 20px;
+      gap: 16px;
       flex-wrap: wrap;
       margin-top: 20px;
     }
 
     .image-row img {
-      width: 250px;
-      height: 330px;
+      width: 42vw;
+      max-width: 200px;
+      height: auto;
       object-fit: cover;
       border-radius: 12px;
     }
 
     .progress-bar {
-      width: 80%;
+      width: 100%;
+      max-width: 400px;
       background-color: #eee;
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
       margin-top: 20px;
       height: 20px;
@@ -90,40 +94,41 @@
       color: #333;
       line-height: 20px;
     }
+
+    img, video {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+    }
   </style>
 </head>
 <body>
-  <!-- Página 1: Welcome -->
   <div class="page active" id="page1">
     <h1>CAPEIDU</h1>
     <h2>STARS ALLIANCE</h2>
-    <img src="imagem1.jpg" alt="Imagem 1" style="width: 100%; max-width: 400px; border-radius: 12px; margin: 20px 0;" />
+    <img src="imagem1.jpg" alt="Imagem 1" />
     <p>Registered brand. Since 2020.</p>
     <button onclick="nextPage(2)">ENTRAR</button>
   </div>
 
-  <!-- Página 2: Slideshow -->
   <div class="page" id="page2">
-    <img id="slideshow" src="foto1.jpg" alt="Slideshow" style="max-width: 90%; border-radius: 12px;" />
+    <img id="slideshow" src="foto1.jpg" alt="Slideshow" />
   </div>
 
-  <!-- Página 3: Vídeo -->
   <div class="page" id="page3">
-    <video id="videoPlayer" style="width: 60%; border-radius: 12px;" controls>
+    <video id="videoPlayer" playsinline webkit-playsinline controls>
       <source src="video.mp4" type="video/mp4">
       O teu navegador não suporta este vídeo.
     </video>
     <button onclick="nextPage(4)">AVANÇAR PARA PRENDA</button>
   </div>
 
-  <!-- Página 4: Erro 404 -->
   <div class="page" id="page4">
-    <img src="erro-404.jpg" alt="Erro 404" style="max-width: 90%; border-radius: 12px;" />
+    <img src="erro-404.jpg" alt="Erro 404" />
     <h2 style="margin-top: 20px;">ERROR 404: CHOSEN GIFT NOT FOUND</h2>
     <button onclick="nextPage(5)">AVANÇAR</button>
   </div>
 
-  <!-- Página 5: Manutenção -->
   <div class="page" id="page5">
     <div class="image-row">
       <img src="rapazes.jpeg" alt="Rapazes" />
@@ -136,39 +141,32 @@
     </div>
   </div>
 
-  <!-- Página 6: Manutenção concluída -->
   <div class="page" id="page6">
-    <img src="reparado.jpg" alt="Reparado" style="max-width: 90%; border-radius: 12px; margin-bottom: 20px;" />
+    <img src="reparado.jpg" alt="Reparado" />
     <h2>Manutenção concluída! (E ferramentas arrumadas!)</h2>
     <button onclick="nextPage(7)">AVANÇAR</button>
   </div>
 
-  <!-- Página 7: Introdução à revelação -->
   <div class="page" id="page7">
     <p>Queridos parceiros da vida, como não encontrámos a prenda que vos tencionamos dar no vosso site, decidimos criar um outro para vos anunciar o que temos em mente.</p>
     <button onclick="nextPage(8)">REVEAL</button>
   </div>
 
-  <!-- Página 8: Revelação final -->
   <div class="page" id="page8">
-    <div style="font-size: 1.2rem; max-width: 600px; margin-bottom: 20px;">
-      <p>
-        No dia em que disserem "sim", vão selar o vosso amor com um gesto simples mas cheio de significado: a troca das alianças.
-      </p>
-      <p style="margin-top: 15px;">
-        Como homenagem à nossa aliança, Capeidu Stars Alliance, gostaríamos de vos oferecer as alianças para a Pintolim!
-      </p>
+    <div style="font-size: 1rem; max-width: 90vw; margin-bottom: 20px;">
+      <p>No dia em que disserem "sim", vão selar o vosso amor com um gesto simples mas cheio de significado: a troca das alianças.</p>
+      <p style="margin-top: 15px;">Como homenagem à nossa aliança, Capeidu Stars Alliance, gostaríamos de vos oferecer as alianças para a Pintolim!</p>
     </div>
 
-    <img src="aliancas.jpg" alt="Alianças" style="max-width: 200px; border-radius: 12px; margin: 20px 0;" />
+    <img src="aliancas.jpg" alt="Alianças" style="max-width: 200px; margin: 20px 0;" />
 
-    <p style="margin-top: 10px; font-size: 0.9rem; color: #555; max-width: 600px;">
+    <p style="margin-top: 10px; font-size: 0.9rem; color: #555; max-width: 90vw;">
       Disclaimer: as alianças serão da vossa escolha e agrado, sem o nosso bitaite. Apenas queremos fazer parte da vossa aliança, para que se lembrem que estaremos sempre aqui nos momentos bons e menos bons.
     </p>
 
-    <div style="margin-top: 30px;">
+    <div style="margin-top: 30px; display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
       <button onclick="alert('Yay! 🥹❤️')">ACEITAMOS!</button>
-      <button onclick="alert('Mentira! Não podem recusar 😆')" style="margin-left: 10px; background: #eee; color: #000;">NÃO ACEITAMOS!</button>
+      <button onclick="alert('Mentira! Não podem recusar 😆')" style="background: #eee; color: #000;">NÃO ACEITAMOS!</button>
     </div>
   </div>
 
